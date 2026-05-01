@@ -7,11 +7,15 @@
     <style>
         :root {
             --blue: #0071e3;
-            --blue-dark: #0059c1;
+            --blue-light: #e8f4fd;
             --green: #30d158;
+            --green-light: #e8faf0;
             --purple: #bf5af2;
+            --purple-light: #f5e8fc;
             --orange: #ff9f0a;
+            --orange-light: #fff4e5;
             --pink: #ff375f;
+            --pink-light: #ffe5ea;
             --teal: #64d2ff;
             --bg: #fbfbfd;
             --bg-secondary: #f5f5f7;
@@ -165,7 +169,40 @@
             50% { transform: translateX(-50%) translateY(8px); }
         }
 
-        /* ===== SECTIONS ===== */
+        /* ===== OVERVIEW STATS ===== */
+        .overview-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            padding: 40px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-number.blue { color: var(--blue); }
+        .stat-number.green { color: var(--green); }
+        .stat-number.purple { color: var(--purple); }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===== SECTION ===== */
         .section {
             max-width: 1080px;
             margin: 0 auto;
@@ -178,13 +215,21 @@
         }
 
         .section-header .section-label {
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--blue);
-            margin-bottom: 12px;
-            letter-spacing: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
         }
+
+        .section-header .section-label.blue { background: var(--blue); }
+        .section-header .section-label.green { background: var(--green); }
+        .section-header .section-label.purple { background: var(--purple); }
 
         .section-header h2 {
             font-size: clamp(36px, 6vw, 56px);
@@ -205,151 +250,339 @@
             margin: 0 auto;
         }
 
-        /* ===== BENTO GRID ===== */
-        .bento-grid {
+        /* ===== INFOGRAPHIC CARDS ===== */
+        .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            gap: 20px;
             padding-bottom: 40px;
         }
 
-        .bento-card {
+        .info-card {
             background: #ffffff;
             border-radius: 24px;
-            padding: 40px 36px;
+            padding: 36px 32px;
             border: 1px solid var(--border);
             transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .bento-card:hover {
+        .info-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
         }
 
-        .bento-card:hover::before {
-            opacity: 1;
-        }
-
-        .bento-card.span-2 {
+        .info-card.span-2 {
             grid-column: 1 / -1;
         }
 
-        .bento-card .card-eyebrow {
+        .info-card .card-eyebrow {
             font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             color: var(--text-tertiary);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
-        .bento-card h3 {
-            font-size: 24px;
+        .info-card h3 {
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: -0.03em;
-            line-height: 1.15;
+            line-height: 1.2;
             color: var(--text-primary);
             margin-bottom: 12px;
         }
 
-        .bento-card p {
+        .info-card p {
             font-size: 15px;
             color: var(--text-secondary);
             line-height: 1.55;
             letter-spacing: -0.01em;
         }
 
-        .bento-card a {
+        .info-card a {
             color: var(--blue);
             text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.2s;
         }
 
-        .bento-card a:hover {
-            opacity: 0.8;
+        .info-card a:hover {
             text-decoration: underline;
         }
 
-        .bento-card.accent-blue h3 {
-            color: var(--blue);
+        /* Card visual header */
+        .card-visual {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
-        .bento-card.accent-green h3 {
-            color: #1d8a3c;
-        }
-
-        .bento-card.accent-purple h3 {
-            color: var(--purple);
-        }
-
-        .bento-card.accent-orange h3 {
-            color: #c97a00;
-        }
-
-        /* ===== ICON BUBBLES ===== */
-        .icon-bubble {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            position: relative;
+            flex-shrink: 0;
         }
 
-        .icon-bubble svg {
-            width: 28px;
-            height: 28px;
+        .card-icon svg {
+            width: 26px;
+            height: 26px;
             fill: white;
         }
 
-        .icon-bubble.blue {
+        .card-icon.blue {
             background: linear-gradient(145deg, #0071e3, #40a0ff);
-            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.25);
         }
 
-        .icon-bubble.green {
+        .card-icon.green {
             background: linear-gradient(145deg, #30d158, #6ee7a0);
-            box-shadow: 0 8px 24px rgba(48, 209, 88, 0.25);
+            box-shadow: 0 6px 20px rgba(48, 209, 88, 0.25);
         }
 
-        .icon-bubble.purple {
+        .card-icon.purple {
             background: linear-gradient(145deg, #bf5af2, #d9a0ff);
-            box-shadow: 0 8px 24px rgba(191, 90, 242, 0.25);
+            box-shadow: 0 6px 20px rgba(191, 90, 242, 0.25);
         }
 
-        .icon-bubble.orange {
+        .card-icon.orange {
             background: linear-gradient(145deg, #ff9f0a, #ffc966);
-            box-shadow: 0 8px 24px rgba(255, 159, 10, 0.25);
+            box-shadow: 0 6px 20px rgba(255, 159, 10, 0.25);
         }
 
-        /* ===== TOOL SHOWCASE ===== */
-        .tool-showcase {
+        /* ===== STEP CONNECTOR ===== */
+        .step-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .step-connector .line {
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(180deg, var(--divider), transparent);
+        }
+
+        .step-connector .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid var(--text-tertiary);
+            opacity: 0.4;
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+        .comparison-section {
+            padding: 0 24px 60px;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .comparison-table thead th {
+            padding: 20px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: left;
+        }
+
+        .comparison-table thead th:first-child {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .comparison-table thead th:nth-child(2) {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .comparison-table thead th:nth-child(3) {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .comparison-table tbody td {
+            padding: 16px 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tbody td:first-child {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* ===== FLOW DIAGRAM ===== */
+        .flow-diagram {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 48px 40px;
+            border: 1px solid var(--border);
+            margin: 40px 0;
+        }
+
+        .flow-diagram h3 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 36px;
+            color: var(--text-primary);
+        }
+
+        .flow-steps {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .flow-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            min-width: 120px;
+        }
+
+        .flow-circle {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 2px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .flow-circle .step-num {
+            font-size: 11px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .flow-circle.blue {
+            background: linear-gradient(145deg, #0071e3, #40a0ff);
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+        }
+
+        .flow-circle.green {
+            background: linear-gradient(145deg, #30d158, #6ee7a0);
+            box-shadow: 0 8px 24px rgba(48, 209, 88, 0.3);
+        }
+
+        .flow-circle.purple {
+            background: linear-gradient(145deg, #bf5af2, #d9a0ff);
+            box-shadow: 0 8px 24px rgba(191, 90, 242, 0.3);
+        }
+
+        .flow-circle.orange {
+            background: linear-gradient(145deg, #ff9f0a, #ffc966);
+            box-shadow: 0 8px 24px rgba(255, 159, 10, 0.3);
+        }
+
+        .flow-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+
+        .flow-sublabel {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            padding-top: 28px;
+            color: var(--text-tertiary);
+            font-size: 20px;
+            opacity: 0.4;
+        }
+
+        /* ===== CHECKLIST ===== */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .checklist li .check-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--green-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checklist li .check-icon svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--green);
+        }
+
+        /* ===== TOOL COMPARISON ===== */
+        .tool-compare {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             padding-bottom: 40px;
         }
 
         .tool-card {
             background: #ffffff;
             border-radius: 28px;
-            padding: 56px 48px;
+            padding: 44px 36px;
             border: 1px solid var(--border);
-            margin-bottom: 20px;
             transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
             position: relative;
             overflow: hidden;
@@ -360,8 +593,8 @@
             position: absolute;
             top: -50%;
             right: -20%;
-            width: 400px;
-            height: 400px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             opacity: 0.04;
             pointer-events: none;
@@ -383,7 +616,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 0.04em;
             text-transform: uppercase;
@@ -403,27 +636,47 @@
         }
 
         .tool-card h3 {
-            font-size: clamp(32px, 5vw, 44px);
+            font-size: clamp(28px, 4vw, 38px);
             font-weight: 700;
             letter-spacing: -0.04em;
             line-height: 1.08;
             margin-bottom: 16px;
         }
 
-        .tool-card.chatgpt h3 {
-            color: var(--blue);
-        }
-
-        .tool-card.codex h3 {
-            color: #1d8a3c;
-        }
+        .tool-card.chatgpt h3 { color: var(--blue); }
+        .tool-card.codex h3 { color: #1d8a3c; }
 
         .tool-card p {
-            font-size: 17px;
+            font-size: 15px;
             color: var(--text-secondary);
             line-height: 1.6;
             letter-spacing: -0.01em;
-            max-width: 600px;
+        }
+
+        /* Capability tags */
+        .capability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .cap-tag {
+            padding: 6px 14px;
+            border-radius: 980px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .tool-card.chatgpt .cap-tag {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .tool-card.codex .cap-tag {
+            background: var(--green-light);
+            color: #1d8a3c;
         }
 
         /* ===== DIVIDER ===== */
@@ -529,17 +782,36 @@
                 padding: 72px 0 40px;
             }
 
-            .bento-grid {
+            .info-grid,
+            .tool-compare {
                 grid-template-columns: 1fr;
             }
 
-            .bento-card {
-                padding: 32px 28px;
+            .flow-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+                padding: 0;
+            }
+
+            .overview-stats {
+                gap: 32px;
+            }
+
+            .comparison-table {
+                font-size: 13px;
+            }
+
+            .comparison-table thead th,
+            .comparison-table tbody td {
+                padding: 12px 16px;
             }
 
             .tool-card {
-                padding: 40px 28px;
-                border-radius: 24px;
+                padding: 36px 28px;
             }
 
             .cta-section {
@@ -552,7 +824,7 @@
             nav { display: none; }
             .scroll-indicator { display: none; }
             .fade-in { opacity: 1; transform: none; }
-            .bento-card:hover, .tool-card:hover { transform: none; box-shadow: none; }
+            .info-card:hover, .tool-card:hover { transform: none; box-shadow: none; }
             body { background: white; }
         }
     </style>
@@ -576,31 +848,64 @@
         </div>
     </section>
 
+    <!-- Overview Stats -->
+    <div class="overview-stats fade-in">
+        <div class="stat-item">
+            <div class="stat-number blue">3</div>
+            <div class="stat-label">准备步骤</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number green">2</div>
+            <div class="stat-label">核心工具</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number purple">1</div>
+            <div class="stat-label">最小流程</div>
+        </div>
+    </div>
+
     <!-- Step 1 -->
     <div class="section">
         <div class="section-header fade-in">
-            <div class="section-label">第一步</div>
+            <div class="section-label blue">1</div>
             <h2>前期准备</h2>
             <p>完成以下两步，即可开始使用</p>
         </div>
-        <div class="bento-grid">
-            <div class="bento-card accent-blue fade-in">
-                <div class="icon-bubble blue">
-                    <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+        <div class="info-grid">
+            <div class="info-card fade-in">
+                <div class="card-visual">
+                    <div class="card-icon blue">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+                    </div>
+                    <div>
+                        <div class="card-eyebrow">账号</div>
+                        <h3>苹果海外账号</h3>
+                    </div>
                 </div>
-                <div class="card-eyebrow">账号</div>
-                <h3>苹果海外账号</h3>
                 <p>很多国外应用在国内区 App Store 无法下载，需要注册一个美区 Apple ID。</p>
-                <p style="margin-top: 12px;"><a href="https://xhslink.com/m/KgMYrLDAV7" target="_blank" rel="noopener">查看详细教程</a></p>
+                <p style="margin-top: 12px;"><a href="https://xhslink.com/m/KgMYrLDAV7" target="_blank" rel="noopener">查看详细教程 →</a></p>
             </div>
-            <div class="bento-card accent-purple fade-in delay-1">
-                <div class="icon-bubble purple">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            <div class="info-card fade-in delay-1">
+                <div class="card-visual">
+                    <div class="card-icon purple">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div>
+                        <div class="card-eyebrow">网络</div>
+                        <h3>海外网络环境</h3>
+                    </div>
                 </div>
-                <div class="card-eyebrow">网络</div>
-                <h3>海外网络环境</h3>
                 <p>部分产品需要海外网络，需搭建 VPN 环境。</p>
-                <p style="margin-top: 12px;">前往 <a href="https://www.rocketgirls.space/" target="_blank" rel="noopener">火箭妹小卖部</a> 购买 Shadowrocket，再前往 <a href="https://doumao.top/#/register?code=IyiGWIWC" target="_blank" rel="noopener">逗猫</a> 购买流量套餐。</p>
+                <ul class="checklist" style="margin-top: 12px;">
+                    <li>
+                        <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+                        <span>前往 <a href="https://www.rocketgirls.space/" target="_blank" rel="noopener">火箭妹小卖部</a> 购买 Shadowrocket</span>
+                    </li>
+                    <li>
+                        <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+                        <span>前往 <a href="https://doumao.top/#/register?code=IyiGWIWC" target="_blank" rel="noopener">逗猫</a> 购买流量套餐</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -610,28 +915,70 @@
     <!-- Step 2 -->
     <div class="section">
         <div class="section-header fade-in">
-            <div class="section-label">第二步</div>
+            <div class="section-label green">2</div>
             <h2>软件安装</h2>
             <p>在移动设备和 PC 上分别安装</p>
         </div>
-        <div class="bento-grid">
-            <div class="bento-card accent-green fade-in">
-                <div class="icon-bubble green">
-                    <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+
+        <!-- Flow Diagram -->
+        <div class="flow-diagram fade-in">
+            <h3>安装流程</h3>
+            <div class="flow-steps">
+                <div class="flow-node">
+                    <div class="flow-circle blue">
+                        <span class="step-num">Step 1</span>
+                        📱
+                    </div>
+                    <div class="flow-label">移动端</div>
+                    <div class="flow-sublabel">App Store 下载</div>
                 </div>
-                <div class="card-eyebrow">移动端</div>
-                <h3>App Store 下载</h3>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node">
+                    <div class="flow-circle green">
+                        <span class="step-num">Step 2</span>
+                        💻
+                    </div>
+                    <div class="flow-label">PC 端</div>
+                    <div class="flow-sublabel">Google 搜索下载</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node">
+                    <div class="flow-circle purple">
+                        <span class="step-num">Step 3</span>
+                        🔐
+                    </div>
+                    <div class="flow-label">注册账号</div>
+                    <div class="flow-sublabel">完成登录</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card accent-green fade-in">
+                <div class="card-visual">
+                    <div class="card-icon green">
+                        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                    </div>
+                    <div>
+                        <div class="card-eyebrow">移动端</div>
+                        <h3>App Store 下载</h3>
+                    </div>
+                </div>
                 <p>在 App Store 登录美区 Apple ID，直接搜索目标软件即可下载。</p>
             </div>
-            <div class="bento-card accent-orange fade-in delay-1">
-                <div class="icon-bubble orange">
-                    <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+            <div class="info-card accent-orange fade-in delay-1">
+                <div class="card-visual">
+                    <div class="card-icon orange">
+                        <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                    </div>
+                    <div>
+                        <div class="card-eyebrow">PC 端</div>
+                        <h3>Google 搜索下载</h3>
+                    </div>
                 </div>
-                <div class="card-eyebrow">PC 端</div>
-                <h3>Google 搜索下载</h3>
                 <p>直接通过 Google 搜索软件名称，一般首条结果即为官方下载入口。</p>
             </div>
-            <div class="bento-card span-2 fade-in delay-2">
+            <div class="info-card span-2 fade-in delay-2">
                 <div class="card-eyebrow">核心清单</div>
                 <h3>安装以下软件并注册账号</h3>
                 <p><strong style="color: var(--blue);">ChatGPT</strong> &mdash; AI 对话助手 &nbsp;&nbsp;|&nbsp;&nbsp; <strong style="color: #1d8a3c;">Codex</strong> &mdash; AI 代码工程师</p>
@@ -644,20 +991,74 @@
     <!-- Step 3 -->
     <div class="section">
         <div class="section-header fade-in">
-            <div class="section-label">第三步</div>
+            <div class="section-label purple">3</div>
             <h2>如何使用</h2>
-            <p>了解两款核心工具的定位</p>
+            <p>了解两款核心工具的定位与能力</p>
         </div>
-        <div class="tool-showcase">
+
+        <!-- Comparison Table -->
+        <div class="comparison-section fade-in">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>对比维度</th>
+                        <th>🤖 ChatGPT</th>
+                        <th>🛠️ Codex</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>定位</td>
+                        <td>AI 助手</td>
+                        <td>AI 工程师</td>
+                    </tr>
+                    <tr>
+                        <td>核心能力</td>
+                        <td>聊天、思考、回答问题</td>
+                        <td>写代码、跑任务、完成工作</td>
+                    </tr>
+                    <tr>
+                        <td>适用场景</td>
+                        <td>写文案、做规划、理思路</td>
+                        <td>开发、调试、自动化</td>
+                    </tr>
+                    <tr>
+                        <td>交互方式</td>
+                        <td>对话式</td>
+                        <td>命令行 / 代码</td>
+                    </tr>
+                    <tr>
+                        <td>一句话</td>
+                        <td>知识渊博的朋友</td>
+                        <td>24 小时在线的工程师</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tool Cards -->
+        <div class="tool-compare">
             <div class="tool-card chatgpt fade-in">
                 <div class="tool-badge">AI 助手</div>
                 <h3>ChatGPT</h3>
                 <p>会聊天、会思考的 AI 助手。能回答问题、帮你写文案、做规划、理思路。就像身边有一位知识渊博的朋友，随时可以讨论和碰撞想法。</p>
+                <div class="capability-tags">
+                    <span class="cap-tag">💬 对话</span>
+                    <span class="cap-tag"> 文案</span>
+                    <span class="cap-tag">📋 规划</span>
+                    <span class="cap-tag"> 思考</span>
+                </div>
             </div>
             <div class="tool-card codex fade-in delay-1">
                 <div class="tool-badge">AI 工程师</div>
                 <h3>Codex</h3>
                 <p>能直接帮你写代码、跑任务、完成实际工作的 AI 工程师。就像一位 24 小时在线的工程师，你说需求，它出代码。</p>
+                <div class="capability-tags">
+                    <span class="cap-tag"> 代码</span>
+                    <span class="cap-tag">⚡ 任务</span>
+                    <span class="cap-tag">🔧 工具</span>
+                    <span class="cap-tag">🚀 自动化</span>
+                </div>
             </div>
         </div>
     </div>
